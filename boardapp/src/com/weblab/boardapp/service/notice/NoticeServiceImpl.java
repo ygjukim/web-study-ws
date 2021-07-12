@@ -1,5 +1,6 @@
 package com.weblab.boardapp.service.notice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.weblab.boardapp.dao.notice.NoticeDao;
@@ -34,6 +35,11 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
+	public List<NoticeView> getNoticeViewPubList(String field, String query, int page) {
+		return noticeDao.getNoticeViewPubList(field, query, page);
+	}
+
+	@Override
 	public int getNoticeCount() {
 		return noticeDao.getNoticeCount("TITLE", "");
 	}
@@ -41,6 +47,11 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int getNoticeCount(String field, String query) {
 		return noticeDao.getNoticeCount(field, query);
+	}
+
+	@Override
+	public int getNoticePubCount(String field, String query) {
+		return noticeDao.getNoticePubCount(field, query);
 	}
 
 	@Override
@@ -85,9 +96,30 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int pubNoticeAll(int[] ids) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int pubNoticeAll(int[] openIds, int[] closeIds) {
+		List<String> openList = new ArrayList<String>();
+		for (int i=0; i<openIds.length; i++) {
+			openList.add(String.valueOf(openIds[i]));
+		}
+		
+		List<String> closeList = new ArrayList<String>();
+		for (int i=0; i<closeIds.length; i++) {
+			closeList.add(String.valueOf(closeIds[i]));
+		}
+		
+		return pubNoticeAll(openList, closeList);
+	}
+
+	@Override
+	public int pubNoticeAll(List<String> openList, List<String> closeList) {
+		String openCSV = String.join(",", openList);
+		String closeCSV = String.join(",", closeList);
+		return pubNoticeAll(openCSV, closeCSV);
+	}
+
+	@Override
+	public int pubNoticeAll(String openCSV, String closeCSV) {
+		return noticeDao.updateNoticePubs(openCSV, closeCSV);
 	}
 
 }

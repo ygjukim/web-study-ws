@@ -13,10 +13,14 @@ public interface NoticeService {
 	
 	List<NoticeView> getNoticeViewList(String field, String query, int page);
 	
+	List<NoticeView> getNoticeViewPubList(String field, String query, int page);
+	
 	int getNoticeCount();
 	
 	int getNoticeCount(String field, String query);
 	
+	int getNoticePubCount(String field, String query);
+
 	Notice getNotice(int id);
 	
 	Notice getPrevNotice(int id);
@@ -33,6 +37,10 @@ public interface NoticeService {
 	
 	int deleteNoticeAll(int[] ids);
 	
-	int pubNoticeAll(int[] ids);
+	int pubNoticeAll(int[] openIds, int[] closeIds);
+	
+	int pubNoticeAll(List<String> openList, List<String> closeList);
+
+	int pubNoticeAll(String openCSV, String closeCSV);
 	
 }

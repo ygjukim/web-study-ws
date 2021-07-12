@@ -173,6 +173,7 @@
 						</thead>
 						<tbody>
 
+						<c:set var="ids" value="" />
 						<c:forEach var="n" items="${list}">		
 							<tr>
 								<td>${n.id}</td>
@@ -183,13 +184,15 @@
 								<td>${n.writerId}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${n.regDate}" /></td>
 								<td>${n.hit}</td>
-								<td><input type="checkbox" name="open-id" value="${n.id}"></td>
+								<td><input type="checkbox" name="open-id" value="${n.id}" ${n.pub ? "checked" : ""}></td>
 								<td><input type="checkbox" name="del-id" value="${n.id}"></td>
 							</tr>
+							<c:set var="ids" value="${ids} ${n.id}" />
 						</c:forEach>
 
 						</tbody>
 					</table>
+					<input type="hidden" name="ids" value="${ids}" />
 				</div>
 
 				<c:set var="page" value="${empty param.p ? 1 : param.p}" />

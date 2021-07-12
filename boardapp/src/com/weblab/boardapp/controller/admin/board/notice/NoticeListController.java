@@ -1,6 +1,8 @@
 package com.weblab.boardapp.controller.admin.board.notice;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -65,25 +67,24 @@ public class NoticeListController extends HttpServlet {
 		String cmd = request.getParameter("cmd");
 		String[] openIds = request.getParameterValues("open-id");
 		String[] delIds = request.getParameterValues("del-id");
+		String[] ids = request.getParameter("ids").trim().split(" ");
 				
 		// step #2. data processing
 		NoticeService noticeService = (NoticeService)getServletContext().getAttribute("notice_service");
 		
-		int[] ids = null;
 		switch (cmd) {
 		case "일괄공개":
-			ids = new int[openIds.length];
-			for (int i=0; i<ids.length; i++) {
-				ids[i] = Integer.parseInt(openIds[i]);
-			}
-			noticeService.pubNoticeAll(ids);
+			List<String> openList = Arrays.asList(openIds);
+			List<String> closeList = new ArrayList<String>(Arrays.asList(ids));
+			closeList.removeAll(openList);
+			noticeService.pubNoticeAll(openList, closeList);
 			break;
 		case "일괄삭제":
-			ids = new int[delIds.length];
-			for (int i=0; i<ids.length; i++) {
-				ids[i] = Integer.parseInt(delIds[i]);
+			int[] dids = new int[delIds.length];
+			for (int i=0; i<dids.length; i++) {
+				dids[i] = Integer.parseInt(delIds[i]);
 			}
-			noticeService.deleteNoticeAll(ids);
+			noticeService.deleteNoticeAll(dids);
 			break;
 		}
 		
