@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.Environment;
 
 public class TVUser {
 
@@ -18,7 +18,9 @@ public class TVUser {
 //			new ClassPathXmlApplicationContext("com/weblab/springex/di/AppContext.xml");
 			new AnnotationConfigApplicationContext(AppConfig.class);
 		
-		TV tv = container.getBean(TV.class);
+		Environment env = container.getBean(Environment.class);
+		
+		TV tv = container.getBean(env.getProperty("brand"), TV.class);
 		System.out.println(tv);
 		
 		tv.powerOn();

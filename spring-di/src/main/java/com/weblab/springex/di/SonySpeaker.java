@@ -2,7 +2,7 @@ package com.weblab.springex.di;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("sony")
 public class SonySpeaker implements Speaker {
 
 	@Override

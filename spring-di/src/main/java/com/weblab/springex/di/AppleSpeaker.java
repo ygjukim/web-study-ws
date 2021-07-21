@@ -1,5 +1,8 @@
 package com.weblab.springex.di;
 
+import org.springframework.stereotype.Component;
+
+@Component("apple")
 public class AppleSpeaker implements Speaker {
 
 	@Override

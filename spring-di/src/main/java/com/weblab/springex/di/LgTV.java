@@ -3,16 +3,19 @@ package com.weblab.springex.di;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("lg")
 public class LgTV implements TV {
+	
 	@Autowired(required=false)
+	@Qualifier("sony")
 	private Speaker speaker = null;
-	@Value("OLED-EVO")
+	@Value("${lg.model}")
 	private String model;
-	@Value("2021-2-1")
+	@Value("${lg.purchaseDate}")
 	private Date purchaseDate;
 
 	public LgTV() {
